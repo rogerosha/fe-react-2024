@@ -1,4 +1,6 @@
 import styles from './about.module.css';
+const telegramLink = 'https://www.t.me/rogerosha';
+const githubLink = 'https://www.github.com/rogerosha';
 
 export const AboutComponent = () => {
     const aboutDescriptionClass = styles['about-description'];
@@ -20,13 +22,11 @@ export const AboutComponent = () => {
                 </p>
                 <p className={aboutDescriptionClass}>
                     You can contact me via{' '}
-                    <a href="https://www.t.me/rogerosha" className="link">
-                        {' '}
+                    <a href={telegramLink} className="link">
                         telegram
-                    </a>
+                    </a>{' '}
                     and/or check out my{' '}
-                    <a href="https://www.github.com/rogerosha" className="link">
-                        {' '}
+                    <a href={githubLink} className="link">
                         GitHub
                     </a>
                     .
