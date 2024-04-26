@@ -43,7 +43,7 @@
     flex-direction: row-reverse;
     max-width: 1280px;
     gap: 100px;
-    padding-bottom: 143px;
+    padding: 60px 52px 143px 53px;
   }
 
   .about-image {
