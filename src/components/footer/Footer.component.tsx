@@ -8,13 +8,13 @@ export const FooterComponent = () => (
         <hr className={styles['line']} />
         <div className={styles['footer-content']}>
             <ul className={styles['social-links']}>
-                <a href="#">
+                <a href="https://www.facebook.com">
                     <img className={styles['fb-logo']} src="./facebook.svg" alt="fb"></img>
                 </a>
-                <a href="#">
+                <a href="https://www.linkedin.com/">
                     <img className={styles['li-logo']} src="./linkedin.svg" alt="li"></img>
                 </a>
-                <a href="#">
+                <a href="https://www.instagram.com">
                     <img className={styles['ig-logo']} src="./instagram.svg" alt="ig"></img>
                 </a>
             </ul>
