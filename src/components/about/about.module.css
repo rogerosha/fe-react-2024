@@ -37,6 +37,7 @@
   .about-container {
     flex-direction: row-reverse;
     max-width: 1280px;
+    gap: 100px
   }
 
   .about-image {
