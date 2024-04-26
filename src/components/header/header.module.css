@@ -1,4 +1,30 @@
 .header {
-  font-size: 34px;
-  text-align: center;
+  background-color: #111;
+  height: 70px;
+  display: flex;
+  align-items: center;
+}
+
+.MA-logo {
+  width: 40px;
+  height: 40px;
+  padding-left: 30px;
+  margin-right: auto;
+}
+
+.cart {
+  width: 24px;
+  height: 24px;
+}
+
+.menu {
+  width: 30px;
+  height: 30px;
+}
+
+.right-menu {
+  display: flex;
+  gap: 14px;
+  padding-right: 30px;
+  margin-left: auto;
 }
