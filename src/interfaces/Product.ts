@@ -1,3 +1,5 @@
+import type { Category } from '@/interfaces/Category.ts';
+
 export interface Product {
     id: number;
     title: string;
@@ -7,12 +9,4 @@ export interface Product {
     creationAt: string;
     updatedAt: string;
     category: Category;
-}
-
-export interface Category {
-    id: number;
-    name: string;
-    image: string;
-    creationAt: string;
-    updatedAt: string;
 }
