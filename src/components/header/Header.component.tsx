@@ -16,10 +16,10 @@ export const HeaderComponent = () => (
         </div>
         <div className={styles['right-part']}>
             <div className={styles['navigation']}>
-                <a href="#" className={styles['navigation-link']}>
+                <a href="/#" className={styles['navigation-link']}>
                     About
                 </a>
-                <a href="#" className={styles['navigation-link']}>
+                <a href="/#" className={styles['navigation-link']}>
                     Products
                 </a>
             </div>

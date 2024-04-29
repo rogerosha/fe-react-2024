@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-interface Product {
+export interface Product {
     id: number;
     title: string;
     price: number;
@@ -10,7 +9,7 @@ interface Product {
     category: Category;
 }
 
-interface Category {
+export interface Category {
     id: number;
     name: string;
     image: string;
