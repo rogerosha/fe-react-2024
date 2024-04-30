@@ -1,7 +1,6 @@
+import { githubLink, MAlink, telegramLink } from '@/constants/social-links.ts';
+
 import styles from './about.module.css';
-const telegramLink = 'https://www.t.me/rogerosha';
-const githubLink = 'https://www.github.com/rogerosha';
-const MAlink = 'https://www.mastersacademy.education/frontend-for-beginners-it';
 
 export const AboutComponent = () => {
     const aboutDescriptionClass = styles['about-description'];

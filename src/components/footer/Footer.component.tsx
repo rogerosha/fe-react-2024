@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { MAlink } from '@/constants/social-links.ts';
+
 import styles from './footer.module.css';
-const MAlink = 'https://www.mastersacademy.education/frontend-for-beginners-it';
 
 export const FooterComponent = () => (
     <footer className={styles['footer']}>
