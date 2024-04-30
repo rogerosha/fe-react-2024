@@ -1,0 +1,12 @@
+.fb-logo, .li-logo, .ig-logo {
+  height: 25px;
+  width: 25px;
+}
+
+@media only screen and (min-width: 1024px) {
+
+  .fb-logo, .li-logo, .ig-logo {
+    height: 35px;
+    width: 35px;
+  }
+}

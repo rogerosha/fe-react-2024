@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { SocialIcon } from '@/components/socialIcon/SocialIcon.component.tsx';
 import { MAlink } from '@/constants/social-links.ts';
 
 import styles from './footer.module.css';
@@ -9,15 +10,7 @@ export const FooterComponent = () => (
         <hr className={styles['line']} />
         <div className={styles['footer-content']}>
             <ul className={styles['social-links']}>
-                <a href="https://www.facebook.com">
-                    <img className={styles['fb-logo']} src="./facebook.svg" alt="fb"></img>
-                </a>
-                <a href="https://www.linkedin.com/">
-                    <img className={styles['li-logo']} src="./linkedin.svg" alt="li"></img>
-                </a>
-                <a href="https://www.instagram.com">
-                    <img className={styles['ig-logo']} src="./instagram.svg" alt="ig"></img>
-                </a>
+                <SocialIcon icon={''} link={''}></SocialIcon>
             </ul>
             <div className={styles['footer-text']}>
                 <p>
