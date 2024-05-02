@@ -1,6 +1,6 @@
+import { githubLink, MAlink, telegramLink } from '@/constants/social-links.ts';
+
 import styles from './about.module.css';
-const telegramLink = 'https://www.t.me/rogerosha';
-const githubLink = 'https://www.github.com/rogerosha';
 
 export const AboutComponent = () => {
     const aboutDescriptionClass = styles['about-description'];
@@ -14,7 +14,11 @@ export const AboutComponent = () => {
                     React, HTML, CSS, JavaScript and Git version control system.
                 </p>
                 <p className={aboutDescriptionClass}>
-                    This page was developed during the course &lsquo;Intro to React&rsquo; from Masters Academy in 2024.
+                    This page was developed during the course{' '}
+                    <a href={MAlink} className={styles['link']}>
+                        &lsquo;Intro to React&rsquo;
+                    </a>{' '}
+                    from Masters Academy in 2024.
                 </p>
                 <p className={aboutDescriptionClass}>
                     This is a social project from MOCG company where I got an opportunity to work with Frontend mentors and to create my own
@@ -22,11 +26,11 @@ export const AboutComponent = () => {
                 </p>
                 <p className={aboutDescriptionClass}>
                     You can contact me via{' '}
-                    <a href={telegramLink} className="link">
+                    <a href={telegramLink} className={styles['link']}>
                         telegram
                     </a>{' '}
                     and/or check out my{' '}
-                    <a href={githubLink} className="link">
+                    <a href={githubLink} className={styles['link']}>
                         GitHub
                     </a>
                     .
