@@ -24,20 +24,20 @@ export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick }) => (
         </div>
         <div className={styles['right-part']}>
             <div className={styles['navigation']}>
-                <a
+                <span
                     className={styles['navigation-link']}
                     style={{ fontWeight: page === 'about' ? 'bold' : 'initial' }}
                     onClick={() => onPageClick('about')}
                 >
                     About
-                </a>
-                <a
+                </span>
+                <span
                     className={styles['navigation-link']}
                     style={{ fontWeight: page === 'products' ? 'bold' : 'initial' }}
                     onClick={() => onPageClick('products')}
                 >
                     Products
-                </a>
+                </span>
             </div>
             <div className={styles['right-menu']}>
                 <img className={styles['cart']} src="./cart.svg" alt="cart"></img>
