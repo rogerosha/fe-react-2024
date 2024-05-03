@@ -10,12 +10,16 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => (
     <div className={styles['product-card']}>
-        <div className="image-container">
+        <div className={styles['image-container']}>
             <img className={styles['product-image']} src={product.images[0]} alt={product.title} />
         </div>
-        <div className={styles['title-container']}>
-            <h2 className={styles['product-title']}>{product.title}</h2>
+        <h2 className={styles['product-title']}>{product.title}</h2>
+        <div className={styles['price-container']}>
+            <p className={styles['product-price']}>
+                {product.price}
+                <span className={styles['hryvnia-sign']}>₴</span>
+            </p>
+            <img className={styles['cart-1']} src="./cart-1.svg" alt="cart-1" />
         </div>
-        <p className={styles['product-price']}>Price: ${product.price}</p>
     </div>
 );

@@ -1,5 +1,5 @@
 .products-list {
-  margin: 30px 57px;
+  padding: 30px 57px;
   display: flex;
   flex-wrap: wrap;
   gap: 15px;

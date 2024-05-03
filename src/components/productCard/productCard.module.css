@@ -5,9 +5,12 @@
   border-radius: 20px;
   border: 1px solid #CCC;
   gap: 15px;
+  padding: 15px;
 }
 
 .image-container {
+  margin-top: 5px;
+  margin-inline: 22px;
   border-radius: 20px;
 }
 
@@ -18,23 +21,35 @@
   border-radius: 20px;
 }
 
-.title-container {
+.product-title {
+  margin: 0;
   width: 100%;
-  max-width: 245px;
-  height: 40px;
   padding-inline: 15px;
   display: flex;
   justify-content: flex-start;
-}
-
-.product-title {
   font-weight: 600;
   font-size: 22px;
   line-height: 25px;
 }
 
+.price-container {
+  width: 100%;
+  display: flex;
+  margin: 0;
+  justify-content: space-between;
+}
+
 .product-price {
+  width: 100%;
   font-size: 24px;
   font-weight: 600;
   line-height: 30px;
+  margin: 0;
+}
+
+.hryvnia-sign {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 17px;
+  padding-left: 3px;
 }
