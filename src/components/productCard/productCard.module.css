@@ -52,3 +52,11 @@
   line-height: 17px;
   padding-left: 3px;
 }
+
+@media only screen and (min-width: 1024px) {
+
+  .image-container {
+    margin-inline: 0;
+    margin-right: 44px;
+  }
+}
