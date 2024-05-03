@@ -2,14 +2,17 @@ import React, { useEffect, useState } from 'react';
 
 import { ProductsListComponent } from '@/components/productsList/ProductsList.component.tsx';
 
+import { AboutComponent } from './components/about/About.component.tsx';
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
 
-// import { AboutComponent } from './components/about/About.component.tsx';
 import './App.css';
+
+export type Page = 'about' | 'products';
 
 function App() {
     const [products, setProducts] = useState([]);
+    const [page, setPage] = useState<Page>('products');
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -30,8 +33,9 @@ function App() {
 
     return (
         <div>
-            <HeaderComponent />
-            <ProductsListComponent products={products} />
+            <HeaderComponent page={page} onPageClick={(newPage) => setPage(newPage)} />
+            {page === 'about' && <AboutComponent />}
+            {page === 'products' && <ProductsListComponent products={products} />}
             <FooterComponent />
         </div>
     );

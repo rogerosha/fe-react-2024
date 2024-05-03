@@ -1,8 +1,16 @@
+import type { FC } from 'react';
 import React from 'react';
+
+import type { Page } from '@/App.tsx';
 
 import styles from './header.module.css';
 
-export const HeaderComponent = () => (
+export interface HeaderProps {
+    page: Page;
+    onPageClick: (page: Page) => void;
+}
+
+export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick }) => (
     <header className={styles['header']}>
         <div className={styles['left-part']}>
             <div className={styles['logo']}>
@@ -16,10 +24,18 @@ export const HeaderComponent = () => (
         </div>
         <div className={styles['right-part']}>
             <div className={styles['navigation']}>
-                <a href="/#" className={styles['navigation-link']}>
+                <a
+                    className={styles['navigation-link']}
+                    style={{ fontWeight: page === 'about' ? 'bold' : 'initial' }}
+                    onClick={() => onPageClick('about')}
+                >
                     About
                 </a>
-                <a href="/#" className={styles['navigation-link']}>
+                <a
+                    className={styles['navigation-link']}
+                    style={{ fontWeight: page === 'products' ? 'bold' : 'initial' }}
+                    onClick={() => onPageClick('products')}
+                >
                     Products
                 </a>
             </div>
