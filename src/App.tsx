@@ -1,18 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
-import { ProductsListComponent } from '@/components/productsList/ProductsList.component.tsx';
+import type { PageRoute } from '@/interfaces/Routing.ts';
+import { AboutComponent } from '@/pages/about/About.component.tsx';
+import { ProductsListComponent } from '@/pages/productsList/ProductsList.component.tsx';
 
-import { AboutComponent } from './components/about/About.component.tsx';
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
 
 import './App.css';
 
-export type Page = 'about' | 'products';
-
 function App() {
     const [products, setProducts] = useState([]);
-    const [page, setPage] = useState<Page>('products');
+    const [page, setPage] = useState<PageRoute>('products');
+    const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+
+    const onPageClick = (newPage: PageRoute) => setPage(newPage);
+
+    useEffect(() => {
+        const loadPageFromLocalStorage = () => {
+            const savedPage = localStorage.getItem('savedPage');
+            if (savedPage) {
+                setPage(JSON.parse(savedPage));
+            }
+        };
+
+        loadPageFromLocalStorage();
+    }, []);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -31,11 +44,17 @@ function App() {
         fetchProducts();
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem('savedPage', JSON.stringify(page));
+    }, [page]);
+
     return (
         <div>
-            <HeaderComponent page={page} onPageClick={(newPage) => setPage(newPage)} />
+            <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
             {page === 'about' && <AboutComponent />}
-            {page === 'products' && <ProductsListComponent products={products} />}
+            {page === 'products' && (
+                <ProductsListComponent setSelectedProducts={setSelectedProducts} selectedProducts={selectedProducts} products={products} />
+            )}
             <FooterComponent />
         </div>
     );

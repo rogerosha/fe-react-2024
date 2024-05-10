@@ -1,16 +1,17 @@
 import type { FC } from 'react';
 import React from 'react';
 
-import type { Page } from '@/App.tsx';
+import type { PageRoute } from '@/interfaces/Routing.ts';
 
 import styles from './header.module.css';
 
 export interface HeaderProps {
-    page: Page;
-    onPageClick: (page: Page) => void;
+    page: PageRoute;
+    onPageClick: (page: PageRoute) => void;
+    selectedProducts: number[];
 }
 
-export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick }) => (
+export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedProducts }) => (
     <header className={styles['header']}>
         <div className={styles['left-part']}>
             <div className={styles['logo']}>
@@ -41,6 +42,7 @@ export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick }) => (
             </div>
             <div className={styles['right-menu']}>
                 <img className={styles['cart']} src="./cart.svg" alt="cart"></img>
+                {selectedProducts.length}
                 <img className={styles['menu']} src="./menu.svg" alt="menu"></img>
             </div>
             <div className={styles['buttons']}>
