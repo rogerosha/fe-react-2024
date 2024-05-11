@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
+import type { Product } from '@/interfaces/Product.ts';
 import type { PageRoute } from '@/interfaces/Routing.ts';
 import { AboutComponent } from '@/pages/about/About.component.tsx';
 import { ProductsListComponent } from '@/pages/productsList/ProductsList.component.tsx';
@@ -10,7 +11,7 @@ import { HeaderComponent } from './components/header/Header.component.tsx';
 import './App.css';
 
 function App() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState<PageRoute>('products');
     const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
 
