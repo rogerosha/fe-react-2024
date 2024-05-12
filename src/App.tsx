@@ -8,7 +8,7 @@ import { ProductsListComponent } from '@/pages/productsList/ProductsList.compone
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
 
-import './App.css';
+import styles from './App.module.css';
 
 function App() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -50,7 +50,7 @@ function App() {
     }, [page]);
 
     return (
-        <div>
+        <div className={styles['app']}>
             <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
             {page === 'about' && <AboutComponent />}
             {page === 'products' && (
