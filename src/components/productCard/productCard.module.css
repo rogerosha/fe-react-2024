@@ -6,6 +6,7 @@
   border: 1px solid #CCC;
   gap: 15px;
   padding: 15px;
+  max-width: 275px;
 }
 
 .image-container {

@@ -14,19 +14,28 @@ function App() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState<PageRoute>('products');
     const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+    // const [cart, setCart] = useState<number[]>([]);
 
     const onPageClick = (newPage: PageRoute) => setPage(newPage);
 
-    useEffect(() => {
-        const loadPageFromLocalStorage = () => {
-            const savedPage = localStorage.getItem('savedPage');
-            if (savedPage) {
-                setPage(JSON.parse(savedPage));
-            }
-        };
-
-        loadPageFromLocalStorage();
-    }, []);
+    // useEffect(() => {
+    //     const loadCartFromLocalStorage = () => {
+    //         const savedCart = localStorage.getItem('savedCart');
+    //         if (savedCart) {
+    //             setCart(JSON.parse(savedCart));
+    //         }
+    //     };
+    //
+    //     loadCartFromLocalStorage();
+    // }, []);
+    //
+    // useEffect(() => {
+    //     const saveCartToLocalStorage = () => {
+    //         localStorage.setItem('savedCart', JSON.stringify(cart));
+    //     };
+    //
+    //     saveCartToLocalStorage();
+    // }, [cart]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -44,10 +53,6 @@ function App() {
 
         fetchProducts();
     }, []);
-
-    useEffect(() => {
-        localStorage.setItem('savedPage', JSON.stringify(page));
-    }, [page]);
 
     return (
         <div className={styles['app']}>
