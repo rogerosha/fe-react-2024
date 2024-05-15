@@ -7,6 +7,7 @@ export interface ProductsListComponentProps {
     products: Product[];
     selectedProducts: number[];
     setSelectedProducts: (products: number[]) => void;
+    onProductClick: (product: Product) => void;
 }
 
 export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ products, selectedProducts, setSelectedProducts }) => (

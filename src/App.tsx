@@ -14,28 +14,8 @@ function App() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState<PageRoute>('products');
     const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
-    // const [cart, setCart] = useState<number[]>([]);
 
     const onPageClick = (newPage: PageRoute) => setPage(newPage);
-
-    // useEffect(() => {
-    //     const loadCartFromLocalStorage = () => {
-    //         const savedCart = localStorage.getItem('savedCart');
-    //         if (savedCart) {
-    //             setCart(JSON.parse(savedCart));
-    //         }
-    //     };
-    //
-    //     loadCartFromLocalStorage();
-    // }, []);
-    //
-    // useEffect(() => {
-    //     const saveCartToLocalStorage = () => {
-    //         localStorage.setItem('savedCart', JSON.stringify(cart));
-    //     };
-    //
-    //     saveCartToLocalStorage();
-    // }, [cart]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -54,12 +34,38 @@ function App() {
         fetchProducts();
     }, []);
 
+    useEffect(() => {
+        const productsInCart = localStorage.getItem('cart');
+        if (productsInCart) setSelectedProducts(JSON.parse(productsInCart));
+    }, []);
+
+    function handleClick(product: Product) {
+        const cartRawData = localStorage.getItem('cart');
+        const productsInCart: number[] = cartRawData ? JSON.parse(cartRawData) : [];
+
+        if (productsInCart.includes(product.id)) {
+            const removedProducts = productsInCart.filter((id) => id !== product.id);
+            setSelectedProducts(removedProducts);
+            localStorage.setItem('cart', JSON.stringify(removedProducts));
+            return;
+        }
+
+        productsInCart.push(product.id);
+        setSelectedProducts(productsInCart);
+        localStorage.setItem('cart', JSON.stringify(productsInCart));
+    }
+
     return (
         <div className={styles['app']}>
             <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
             {page === 'about' && <AboutComponent />}
             {page === 'products' && (
-                <ProductsListComponent setSelectedProducts={setSelectedProducts} selectedProducts={selectedProducts} products={products} />
+                <ProductsListComponent
+                    setSelectedProducts={setSelectedProducts}
+                    selectedProducts={selectedProducts}
+                    products={products}
+                    onProductClick={handleClick}
+                />
             )}
             <FooterComponent />
         </div>

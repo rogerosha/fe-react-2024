@@ -43,7 +43,7 @@ export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedPr
                 </div>
                 <div className={styles['right-menu']}>
                     <img className={styles['cart']} src="./cart.svg" alt="cart"></img>
-                    {/* {selectedProducts.length}*/}
+                    {selectedProducts.length}
                     <img className={styles['menu']} src="./menu.svg" alt="menu"></img>
                 </div>
                 <div className={styles['buttons']}>
