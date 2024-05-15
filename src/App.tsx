@@ -32,27 +32,12 @@ function App() {
         };
 
         fetchProducts();
+        setSelectedProducts(JSON.parse(localStorage.getItem('cart') || '[]'));
     }, []);
 
-    useEffect(() => {
-        const productsInCart = localStorage.getItem('cart');
-        if (productsInCart) setSelectedProducts(JSON.parse(productsInCart));
-    }, []);
-
-    function handleClick(product: Product) {
-        const cartRawData = localStorage.getItem('cart');
-        const productsInCart: number[] = cartRawData ? JSON.parse(cartRawData) : [];
-
-        if (productsInCart.includes(product.id)) {
-            const removedProducts = productsInCart.filter((id) => id !== product.id);
-            setSelectedProducts(removedProducts);
-            localStorage.setItem('cart', JSON.stringify(removedProducts));
-            return;
-        }
-
-        productsInCart.push(product.id);
-        setSelectedProducts(productsInCart);
-        localStorage.setItem('cart', JSON.stringify(productsInCart));
+    function handleClick(newProducts: number[]) {
+        setSelectedProducts(newProducts);
+        localStorage.setItem('cart', JSON.stringify(newProducts));
     }
 
     return (
@@ -60,12 +45,7 @@ function App() {
             <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
             {page === 'about' && <AboutComponent />}
             {page === 'products' && (
-                <ProductsListComponent
-                    setSelectedProducts={setSelectedProducts}
-                    selectedProducts={selectedProducts}
-                    products={products}
-                    onProductClick={handleClick}
-                />
+                <ProductsListComponent setSelectedProducts={handleClick} selectedProducts={selectedProducts} products={products} />
             )}
             <FooterComponent />
         </div>
