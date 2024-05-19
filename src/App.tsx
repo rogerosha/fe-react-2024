@@ -1,16 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { AboutComponent } from './components/about/About.component.tsx';
+import type { Product } from '@/interfaces/Product.ts';
+import type { PageRoute } from '@/interfaces/Routing.ts';
+import { AboutComponent } from '@/pages/about/About.component.tsx';
+import { ProductsListComponent } from '@/pages/productsList/ProductsList.component.tsx';
+
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
 
-import './App.css';
+import styles from './App.module.css';
 
 function App() {
+    const [products, setProducts] = useState<Product[]>([]);
+    const [page, setPage] = useState<PageRoute>('products');
+    const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+
+    const onPageClick = (newPage: PageRoute) => setPage(newPage);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('https://ma-backend-api.mocintra.com/api/v1/products?limit=8&offset=2');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+
+        fetchProducts();
+        setSelectedProducts(JSON.parse(localStorage.getItem('cart') || '[]'));
+    }, []);
+
+    function handleClick(newProducts: number[]) {
+        setSelectedProducts(newProducts);
+        localStorage.setItem('cart', JSON.stringify(newProducts));
+    }
+
     return (
-        <div>
-            <HeaderComponent />
-            <AboutComponent />
+        <div className={styles['app']}>
+            <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
+            {page === 'about' && <AboutComponent />}
+            {page === 'products' && (
+                <ProductsListComponent setSelectedProducts={handleClick} selectedProducts={selectedProducts} products={products} />
+            )}
             <FooterComponent />
         </div>
     );
