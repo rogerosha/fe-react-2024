@@ -24,7 +24,7 @@ const SearchBarComponent: FC<SearchBarComponentProps> = ({ onSearch }) => {
                 placeholder="Search..."
             />
             <button onClick={handleSearch} className={styles['search-button']}>
-                <img src="/public/Search_Magnifying_Glass.svg" alt="Search" className={styles['search-icon']} />
+                <img src="./Search_Magnifying_Glass.svg" alt="Search" className={styles['search-icon']} />
             </button>
         </div>
     );

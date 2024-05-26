@@ -11,6 +11,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  font-family: Montserrat, sans-serif;
+  box-sizing: border-box;
+}
+
 a {
   font-weight: 500;
   color: #646CFF;
