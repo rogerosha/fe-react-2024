@@ -16,4 +16,38 @@
     row-gap: 15px;
     justify-content: flex-start;
   }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+  }
+
+  .filters {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .filter-button {
+    height: 40px;
+    padding: 10px 20px;
+    border: 1px solid #E1E1E1;
+    border-radius: 50px;
+    cursor: pointer;
+    color: #656565;
+    background-color: transparent;
+  }
+
+  .sort-dropdown {
+    height: 40px;
+    padding: 10px 20px;
+    border: 1px solid #E1E1E1;
+    border-radius: 50px;
+    color: #656565;
+    font-family: Montserrat, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: transparent;
+  }
 }
