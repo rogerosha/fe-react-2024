@@ -1,7 +1,7 @@
 .search-bar {
   display: flex;
   align-items: flex-start;
-  width: 275px;
+  width: 100%;
   color: #656565;
   position: relative;
 }
@@ -30,4 +30,11 @@
 .search-icon {
   height: 18px;
   width: 18px;
+}
+
+@media only screen and (min-height: 1024px) {
+
+  .search-bar {
+    width: 275px;
+  }
 }

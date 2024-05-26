@@ -8,7 +8,7 @@
 .products-container {
   width: 100%;
   max-width: 1280px;
-  padding: 52px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   gap: 52px;
@@ -18,11 +18,12 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
 }
 
 .sidebar-filters {
   display: flex;
-  gap: 40px;
+  gap: 20px;
 }
 
 .sort-dropdown {
@@ -53,6 +54,10 @@
     justify-content: flex-start;
   }
 
+  .products-container {
+    padding: 52px;
+  }
+
   .sidebar {
     display: flex;
     flex-direction: row;
@@ -62,6 +67,10 @@
     display: flex;
     align-items: center;
     gap: 10px;
+  }
+
+  .sidebar-filters {
+    gap: 40px;
   }
 
   .filter-button {

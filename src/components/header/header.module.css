@@ -171,4 +171,8 @@
   .day-night {
     display: none;
   }
+
+  .header-wrapper {
+    padding: 0 52px;
+  }
 }
