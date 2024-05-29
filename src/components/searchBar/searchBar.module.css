@@ -4,6 +4,7 @@
   width: 100%;
   color: #656565;
   position: relative;
+  max-width: 275px;
 }
 
 .search-input {
