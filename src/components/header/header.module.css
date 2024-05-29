@@ -42,20 +42,20 @@
 }
 
 .day-mode {
-  width: 17px;
-  height: 17px;
+  width: 34px;
+  height: 34px;
 }
 
 .divider {
   width: 1px;
-  height: 17px;
+  height: 34px;
   background-color: #656565;
   margin-inline: 14px;
 }
 
 .night-mode {
-  width: 14px;
-  height: 14px;
+  width: 34px;
+  height: 34px;
 }
 
 .cart {
@@ -116,44 +116,45 @@
     gap: 10px;
   }
 
-  .login {
-    width: 16px;
-    height: 16px;
+  .logout {
+    width: 24px;
+    height: 24px;
   }
 
-  .button-login {
+  .button-logout {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: #333;
-    width: 96px;
+    width: 113px;
     height: 34px;
     border-radius: 40px;
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
+    white-space: nowrap;
     color: #FFF;
   }
 
   .signup {
-    width: 19px;
-    height: 15px;
+    width: 24px;
+    height: 24px;
   }
 
   .button-signup {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #EF4934;
+    background-color: transparent;
     width: 113px;
     height: 34px;
+    border: 1px solid #656565;
     border-radius: 40px;
-    gap: 6px;
     font-size: 16px;
     font-weight: 500;
     line-height: 20px;
     white-space: nowrap;
-    color: #FFF;
+    color: #656565;
   }
 
   .buttons img {
