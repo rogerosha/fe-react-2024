@@ -14,13 +14,18 @@
   justify-content: space-between;
   width: 100%;
   max-width: 1280px;
+  padding-left: 52px;
+}
+
+.theme-changer {
+  display: flex;
 }
 
 .left-part {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 30px;
+  gap: 50px;
 }
 
 .right-part {
@@ -42,7 +47,7 @@
   display: flex;
   align-items: center;
   flex-direction: row;
-  padding-left: 54px;
+  padding: 0;
 }
 
 .day-mode, .night-mode {
@@ -70,8 +75,9 @@
 .right-menu {
   display: flex;
   gap: 14px;
-  padding-right: 30px;
   margin-left: auto;
+  align-items: center;
+  color: var(--text-primary-dark);
 }
 
 @media only screen and (min-width: 1024px) {
@@ -83,10 +89,6 @@
   .MA-logo {
     width: 46px;
     height: 46px;
-  }
-
-  .left-part {
-    padding-left: 52px;
   }
 
   .menu {
@@ -138,6 +140,7 @@
   .signup {
     width: 24px;
     height: 24px;
+    color: var(--icons-semi);
   }
 
   .button-signup {
@@ -145,7 +148,6 @@
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    width: 113px;
     height: 34px;
     border: 1px solid #656565;
     border-radius: 40px;
@@ -154,6 +156,8 @@
     line-height: 20px;
     white-space: nowrap;
     color: #656565;
+    padding: 5px 10px;
+    gap: 6px;
   }
 
   .buttons img {
@@ -167,6 +171,10 @@
     display: none;
   }
 
+  .theme-changer {
+    display: none;
+  }
+
   .navigation {
     display: none;
   }
@@ -176,6 +184,6 @@
   }
 
   .header-wrapper {
-    padding: 0 52px;
+    padding: 0 30px;
   }
 }

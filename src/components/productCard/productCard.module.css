@@ -10,6 +10,10 @@
   max-width: 275px;
 }
 
+.cart-icon {
+  color: var(--icons);
+}
+
 .image-container {
   margin-top: 5px;
   margin-inline: 22px;

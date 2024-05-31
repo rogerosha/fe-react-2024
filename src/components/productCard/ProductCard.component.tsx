@@ -2,6 +2,8 @@ import React from 'react';
 
 import type { Product } from '@/interfaces/Product.ts';
 
+import CartIcon from '../../assets/cart.svg?react';
+
 import styles from './productCard.module.css';
 
 interface ProductCardProps {
@@ -22,7 +24,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onCartClick, 
                 <span className={styles['hryvnia-sign']}>₴</span>
             </p>
             <button onClick={() => onCartClick(product)} className={styles['cart-button']}>
-                <img className={`${styles['cart-icon']} ${isProductInCart ? styles['in-cart'] : ''}`} src="./cart.svg" alt="cart" />
+                <CartIcon className={`${styles['cart-icon']} ${isProductInCart ? styles['in-cart'] : ''}`} />
             </button>
         </div>
     </div>
