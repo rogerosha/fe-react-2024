@@ -52,6 +52,13 @@
   cursor: pointer;
   color: #656565;
   background-color: transparent;
+  display: flex;
+  align-items: center;
+}
+
+.filter-button.active {
+  background-color: #EF4934;
+  color: #FFF;
 }
 
 .filters {

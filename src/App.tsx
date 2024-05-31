@@ -7,6 +7,7 @@ import { ProductsListComponent } from '@/pages/productsList/ProductsList.compone
 
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
+import { ThemeComponent } from './components/theme/Theme.component.tsx';
 
 import styles from './App.module.css';
 
@@ -14,8 +15,10 @@ function App() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState<PageRoute>('products');
     const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
     const onPageClick = (newPage: PageRoute) => setPage(newPage);
+    const toggleTheme = () => setIsDarkMode((previousMode) => !previousMode);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -35,20 +38,38 @@ function App() {
         setSelectedProducts(JSON.parse(localStorage.getItem('cart') || '[]'));
     }, []);
 
+    useEffect(() => {
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            document.body.classList.remove('light-mode');
+        } else {
+            document.body.classList.add('light-mode');
+            document.body.classList.remove('dark-mode');
+        }
+    }, [isDarkMode]);
+
     function handleClick(newProducts: number[]) {
         setSelectedProducts(newProducts);
         localStorage.setItem('cart', JSON.stringify(newProducts));
     }
 
     return (
-        <div className={styles['app']}>
-            <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
-            {page === 'about' && <AboutComponent />}
-            {page === 'products' && (
-                <ProductsListComponent setSelectedProducts={handleClick} selectedProducts={selectedProducts} products={products} />
-            )}
-            <FooterComponent />
-        </div>
+        <ThemeComponent>
+            <div className={`${styles.app} ${isDarkMode ? 'app-dark-mode' : 'app-light-mode'}`}>
+                <HeaderComponent
+                    selectedProducts={selectedProducts}
+                    page={page}
+                    onPageClick={onPageClick}
+                    isDarkMode={isDarkMode}
+                    toggleTheme={toggleTheme}
+                />
+                {page === 'about' && <AboutComponent />}
+                {page === 'products' && (
+                    <ProductsListComponent setSelectedProducts={handleClick} selectedProducts={selectedProducts} products={products} />
+                )}
+                <FooterComponent />
+            </div>
+        </ThemeComponent>
     );
 }
 

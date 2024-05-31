@@ -21,8 +21,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onCartClick, 
                 {product.price}
                 <span className={styles['hryvnia-sign']}>₴</span>
             </p>
-            <button onClick={() => onCartClick(product)}>
-                <img className={styles['cart-1']} src={isProductInCart ? './cart-1.svg' : './cart.svg'} alt="cart-1" />
+            <button onClick={() => onCartClick(product)} className={styles['cart-button']}>
+                <img className={`${styles['cart-icon']} ${isProductInCart ? styles['in-cart'] : ''}`} src="./cart.svg" alt="cart" />
             </button>
         </div>
     </div>

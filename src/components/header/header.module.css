@@ -36,12 +36,16 @@
 }
 
 .day-night {
+  background: none;
+  border: none;
+  cursor: pointer;
   display: flex;
+  align-items: center;
   flex-direction: row;
   padding-left: 54px;
 }
 
-.day-mode {
+.day-mode, .night-mode {
   width: 34px;
   height: 34px;
 }
@@ -51,11 +55,6 @@
   height: 34px;
   background-color: #656565;
   margin-inline: 14px;
-}
-
-.night-mode {
-  width: 34px;
-  height: 34px;
 }
 
 .cart {
@@ -97,7 +96,7 @@
   .navigation {
     display: flex;
     gap: 49px;
-    margin-right: 124px;
+    margin-right: 107px;
   }
 
   .navigation-link {

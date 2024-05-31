@@ -9,20 +9,32 @@ export interface HeaderProps {
     page: PageRoute;
     onPageClick: (page: PageRoute) => void;
     selectedProducts: number[];
+    isDarkMode: boolean;
+    toggleTheme: () => void;
 }
 
-export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedProducts }) => (
+export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedProducts, isDarkMode, toggleTheme }) => (
     <header className={styles['header']}>
         <div className={styles['header-wrapper']}>
             <div className={styles['left-part']}>
                 <div className={styles['logo']}>
                     <img className={styles['MA-logo']} src="./MAlogo.svg" alt="MAlogo"></img>
                 </div>
-                <div className={styles['day-night']}>
-                    <img className={styles['day-mode']} src="./sun.svg" alt="Sun" />
+                <button onClick={toggleTheme} className={styles['day-night']}>
+                    <img
+                        className={styles['day-mode']}
+                        src="./sun.svg"
+                        alt="Sun"
+                        style={{ color: isDarkMode ? 'var(--icons-light)' : 'var(--icons-dark)' }}
+                    />
                     <div className={styles['divider']}></div>
-                    <img className={styles['night-mode']} src="./moon.svg" alt="Moon" />
-                </div>
+                    <img
+                        className={styles['night-mode']}
+                        src="./moon.svg"
+                        alt="Moon"
+                        style={{ color: isDarkMode ? 'var(--icons-light)' : 'var(--icons-dark)' }}
+                    />
+                </button>
             </div>
             <div className={styles['right-part']}>
                 <div className={styles['navigation']}>

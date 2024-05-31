@@ -1,6 +1,7 @@
 .product-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   border-radius: 20px;
   border: 1px solid #CCC;
@@ -55,6 +56,10 @@
   font-weight: 600;
   line-height: 17px;
   padding-left: 3px;
+}
+
+.cart-button {
+  background-color: transparent;
 }
 
 @media only screen and (min-width: 1024px) {

@@ -32,7 +32,11 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     };
 
     const handleCategoryClick = (category: string) => {
-        setSelectedCategory(category);
+        if (selectedCategory === category) {
+            setSelectedCategory(null);
+        } else {
+            setSelectedCategory(category);
+        }
     };
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
