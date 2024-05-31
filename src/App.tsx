@@ -11,14 +11,23 @@ import { ThemeComponent } from './components/theme/Theme.component.tsx';
 
 import styles from './App.module.css';
 
+const THEME_KEY = 'theme';
+
 function App() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState<PageRoute>('products');
     const [selectedProducts, setSelectedProducts] = useState<number[]>([]);
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+
+    const browserTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const activeTheme = (savedTheme && savedTheme === 'dark' ? 'dark' : 'light') || browserTheme;
+
+    const [theme, setTheme] = useState<'light' | 'dark'>(activeTheme);
 
     const onPageClick = (newPage: PageRoute) => setPage(newPage);
-    const toggleTheme = () => setIsDarkMode((previousMode) => !previousMode);
+    const toggleTheme = () => {
+        theme === 'light' ? setTheme('dark') : setTheme('light');
+    };
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -39,14 +48,16 @@ function App() {
     }, []);
 
     useEffect(() => {
-        if (isDarkMode) {
+        if (theme === 'dark') {
             document.body.classList.add('dark-mode');
             document.body.classList.remove('light-mode');
         } else {
             document.body.classList.add('light-mode');
             document.body.classList.remove('dark-mode');
         }
-    }, [isDarkMode]);
+
+        localStorage.setItem(THEME_KEY, theme);
+    }, [theme]);
 
     function handleClick(newProducts: number[]) {
         setSelectedProducts(newProducts);
@@ -55,12 +66,12 @@ function App() {
 
     return (
         <ThemeComponent>
-            <div className={`${styles.app} ${isDarkMode ? 'app-dark-mode' : 'app-light-mode'}`}>
+            <div className={`${styles.app} ${theme === 'dark' ? 'app-dark-mode' : 'app-light-mode'}`}>
                 <HeaderComponent
                     selectedProducts={selectedProducts}
                     page={page}
                     onPageClick={onPageClick}
-                    isDarkMode={isDarkMode}
+                    isDarkMode={theme === 'dark'}
                     toggleTheme={toggleTheme}
                 />
                 {page === 'about' && <AboutComponent />}
