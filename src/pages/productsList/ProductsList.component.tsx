@@ -2,19 +2,10 @@ import React, { useState } from 'react';
 
 import { ProductCard } from '@/components/productCard/ProductCard.component.tsx';
 import SearchBarComponent from '@/components/searchBar/SearchBar.component.tsx';
+import { Categories, SortFilters } from '@/constants/sortFilters.ts';
 import type { Product } from '@/interfaces/Product.ts';
 
 import styles from './productsList.module.css';
-
-const categories = [
-    { id: 'electronics', label: 'Electronics' },
-    { id: 'shoes', label: 'Shoes' },
-    { id: 'clothes', label: 'Clothes' },
-];
-
-const highLow = 'high-low';
-const newest = 'newest';
-const oldest = 'oldest';
 
 export interface ProductsListComponentProps {
     products: Product[];
@@ -54,9 +45,9 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
             return product.category.name.toLowerCase() === selectedCategory.toLowerCase();
         })
         .sort((a, b) => {
-            if (sortOption === highLow) return b.price - a.price;
-            if (sortOption === newest) return new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime();
-            if (sortOption === oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
+            if (sortOption === SortFilters.highLow) return b.price - a.price;
+            if (sortOption === SortFilters.newest) return new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime();
+            if (sortOption === SortFilters.oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
             return 0;
         });
 
@@ -66,7 +57,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                 <SearchBarComponent onSearch={handleSearch} />
                 <div className={styles['sidebar-filters']}>
                     <div className={styles['filters']}>
-                        {categories.map((category) => (
+                        {Object.values(Categories).map((category) => (
                             <button
                                 key={category.id}
                                 onClick={() => handleCategoryClick(category.id)}
@@ -79,9 +70,9 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                     <div className={styles['sort-bar']}>
                         <span className={styles['sort-label']}>Sort by: </span>
                         <select onChange={handleSortChange} className={styles['sort-dropdown']}>
-                            <option value={highLow}>Price (High - Low)</option>
-                            <option value={newest}>Newest</option>
-                            <option value={oldest}>Oldest</option>
+                            <option value={SortFilters.highLow}>Price (High - Low)</option>
+                            <option value={SortFilters.newest}>Newest</option>
+                            <option value={SortFilters.oldest}>Oldest</option>
                         </select>
                     </div>
                 </div>
