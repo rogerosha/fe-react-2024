@@ -32,15 +32,19 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     };
 
     const handleCategoryClick = (category: string) => {
-        if (selectedCategory === category) {
-            setSelectedCategory(null);
-        } else {
-            setSelectedCategory(category);
-        }
+        setSelectedCategory((previousCategory) => (previousCategory === category ? null : category));
     };
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSortOption(event.target.value);
+    };
+
+    const handleCartClick = (productId: number) => {
+        if (selectedProducts.includes(productId)) {
+            setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+        } else {
+            setSelectedProducts([...selectedProducts, productId]);
+        }
     };
 
     const filteredProducts = products
@@ -86,13 +90,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                 <div className={styles['products-list']}>
                     {filteredProducts.map((product) => (
                         <ProductCard
-                            onCartClick={() => {
-                                if (selectedProducts.includes(product.id)) {
-                                    setSelectedProducts(selectedProducts.filter((id) => id !== product.id));
-                                    return;
-                                }
-                                setSelectedProducts([...selectedProducts, product.id]);
-                            }}
+                            onCartClick={() => handleCartClick(product.id)}
                             isProductInCart={selectedProducts.includes(product.id)}
                             key={product.id}
                             product={product}
