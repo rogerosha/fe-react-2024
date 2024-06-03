@@ -18,20 +18,28 @@ export interface ProductsListComponentProps {
 
 export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ products, selectedProducts, setSelectedProducts }) => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [sortOption, setSortOption] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
+        setCurrentPage(1);
     };
 
     const handleCategoryClick = (category: string) => {
-        setSelectedCategory((previousCategory) => (previousCategory === category ? null : category));
+        setSelectedCategories((previousCategories) => {
+            if (previousCategories.includes(category)) {
+                return previousCategories.filter((cat) => cat !== category);
+            }
+            return [...previousCategories, category];
+        });
+        setCurrentPage(1);
     };
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSortOption(event.target.value);
+        setCurrentPage(1);
     };
 
     const handleCartClick = (productId: number) => {
@@ -49,8 +57,8 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     const filteredProducts = products
         .filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
         .filter((product) => {
-            if (!selectedCategory) return true;
-            return product.category.name.toLowerCase() === selectedCategory.toLowerCase();
+            if (selectedCategories.length === 0) return true;
+            return selectedCategories.includes(product.category.name.toLowerCase());
         })
         .sort((a, b) => {
             if (sortOption === SortFilters.highLow) return b.price - a.price;
@@ -73,7 +81,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                             <button
                                 key={category.id}
                                 onClick={() => handleCategoryClick(category.id)}
-                                className={`${styles['filter-button']} ${selectedCategory === category.id ? styles['active'] : ''}`}
+                                className={`${styles['filter-button']} ${selectedCategories.includes(category.id) ? styles['active'] : ''}`}
                             >
                                 {category.label}
                             </button>
