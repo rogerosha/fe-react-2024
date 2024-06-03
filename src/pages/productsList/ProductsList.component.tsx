@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 
+import { Pagination } from '@/components/pagination/Pagination.component.tsx';
 import { ProductCard } from '@/components/productCard/ProductCard.component.tsx';
 import SearchBarComponent from '@/components/searchBar/SearchBar.component.tsx';
 import { Categories, SortFilters } from '@/constants/sortFilters.ts';
 import type { Product } from '@/interfaces/Product.ts';
 
 import styles from './productsList.module.css';
+
+const PRODUCTS_ON_PAGE = 8;
 
 export interface ProductsListComponentProps {
     products: Product[];
@@ -17,6 +20,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [sortOption, setSortOption] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
@@ -38,6 +42,10 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
         }
     };
 
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
     const filteredProducts = products
         .filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
         .filter((product) => {
@@ -50,6 +58,10 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
             if (sortOption === SortFilters.oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
             return 0;
         });
+
+    const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_ON_PAGE);
+    const startIndex = (currentPage - 1) * PRODUCTS_ON_PAGE;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + PRODUCTS_ON_PAGE);
 
     return (
         <div className={styles['products-container']}>
@@ -79,7 +91,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
             </div>
             <div className={styles['products-content']}>
                 <div className={styles['products-list']}>
-                    {filteredProducts.map((product) => (
+                    {paginatedProducts.map((product) => (
                         <ProductCard
                             onCartClick={() => handleCartClick(product.id)}
                             isProductInCart={selectedProducts.includes(product.id)}
@@ -88,6 +100,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                         />
                     ))}
                 </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             </div>
         </div>
     );

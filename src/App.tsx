@@ -32,7 +32,7 @@ function App() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('https://ma-backend-api.mocintra.com/api/v1/products?limit=8&offset=2');
+                const response = await fetch('https://ma-backend-api.mocintra.com/api/v1/products?limit=50&offset=0');
                 if (!response.ok) {
                     throw new Error('Failed to fetch products');
                 }
