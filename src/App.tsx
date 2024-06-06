@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import type { Product } from '@/interfaces/Product.ts';
 import type { PageRoute } from '@/interfaces/Routing.ts';
@@ -13,6 +13,17 @@ import styles from './App.module.css';
 
 const THEME_KEY = 'theme';
 
+const CartContext = createContext({
+    selectedProducts: [] as number[],
+    addProductToCart: (productId: number) => {},
+    removeProductFromCart: (productId: number) => {},
+});
+
+const ThemeContext = createContext({
+    theme: 'light' as 'light' | 'dark',
+    toggleTheme: () => {},
+});
+
 function App() {
     const [products, setProducts] = useState<Product[]>([]);
     const [page, setPage] = useState<PageRoute>('products');
@@ -26,7 +37,7 @@ function App() {
 
     const onPageClick = (newPage: PageRoute) => setPage(newPage);
     const toggleTheme = () => {
-        theme === 'light' ? setTheme('dark') : setTheme('light');
+        setTheme((previousTheme) => (previousTheme === 'light' ? 'dark' : 'light'));
     };
 
     useEffect(() => {
@@ -59,29 +70,44 @@ function App() {
         localStorage.setItem(THEME_KEY, theme);
     }, [theme]);
 
-    function handleClick(newProducts: number[]) {
-        setSelectedProducts(newProducts);
-        localStorage.setItem('cart', JSON.stringify(newProducts));
-    }
+    const addProductToCart = (productId: number) => {
+        setSelectedProducts((previousSelectedProducts) => {
+            const updatedProducts = [...previousSelectedProducts, productId];
+            localStorage.setItem('cart', JSON.stringify(updatedProducts));
+            return updatedProducts;
+        });
+    };
+
+    const removeProductFromCart = (productId: number) => {
+        setSelectedProducts((previousSelectedProducts) => {
+            const updatedProducts = previousSelectedProducts.filter((id) => id !== productId);
+            localStorage.setItem('cart', JSON.stringify(updatedProducts));
+            return updatedProducts;
+        });
+    };
 
     return (
         <ThemeComponent>
-            <div className={`${styles.app} ${theme === 'dark' ? 'app-dark-mode' : 'app-light-mode'}`}>
-                <HeaderComponent
-                    selectedProducts={selectedProducts}
-                    page={page}
-                    onPageClick={onPageClick}
-                    isDarkMode={theme === 'dark'}
-                    toggleTheme={toggleTheme}
-                />
-                {page === 'about' && <AboutComponent />}
-                {page === 'products' && (
-                    <ProductsListComponent setSelectedProducts={handleClick} selectedProducts={selectedProducts} products={products} />
-                )}
-                <FooterComponent />
-            </div>
+            <ThemeContext.Provider value={{ theme, toggleTheme }}>
+                <CartContext.Provider value={{ selectedProducts, addProductToCart, removeProductFromCart }}>
+                    <div className={`${styles.app} ${theme === 'dark' ? 'app-dark-mode' : 'app-light-mode'}`}>
+                        <HeaderComponent
+                            selectedProducts={selectedProducts}
+                            page={page}
+                            onPageClick={onPageClick}
+                            isDarkMode={theme === 'dark'}
+                            toggleTheme={toggleTheme}
+                        />
+                        {page === 'about' && <AboutComponent />}
+                        {page === 'products' && <ProductsListComponent products={products} />}
+                        <FooterComponent />
+                    </div>
+                </CartContext.Provider>
+            </ThemeContext.Provider>
         </ThemeComponent>
     );
 }
 
 export default App;
+export const useCart = () => useContext(CartContext);
+export const useTheme = () => useContext(ThemeContext);

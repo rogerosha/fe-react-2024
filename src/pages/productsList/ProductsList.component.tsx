@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import { useCart, useTheme } from '@/App.tsx';
 import { Pagination } from '@/components/pagination/Pagination.component.tsx';
 import { ProductCard } from '@/components/productCard/ProductCard.component.tsx';
 import SearchBarComponent from '@/components/searchBar/SearchBar.component.tsx';
@@ -12,11 +13,11 @@ const PRODUCTS_ON_PAGE = 8;
 
 export interface ProductsListComponentProps {
     products: Product[];
-    selectedProducts: number[];
-    setSelectedProducts: (products: number[]) => void;
 }
 
-export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ products, selectedProducts, setSelectedProducts }) => {
+export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ products }) => {
+    const { selectedProducts, addProductToCart, removeProductFromCart } = useCart();
+    const { theme } = useTheme();
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [sortOption, setSortOption] = useState<string | null>(null);
@@ -44,9 +45,9 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
 
     const handleCartClick = (productId: number) => {
         if (selectedProducts.includes(productId)) {
-            setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+            removeProductFromCart(productId);
         } else {
-            setSelectedProducts([...selectedProducts, productId]);
+            addProductToCart(productId);
         }
     };
 
@@ -72,7 +73,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     const paginatedProducts = filteredProducts.slice(startIndex, startIndex + PRODUCTS_ON_PAGE);
 
     return (
-        <div className={styles['products-container']}>
+        <div className={`${styles['products-container']} ${theme === 'dark' ? styles['dark-mode'] : styles['light-mode']}`}>
             <div className={styles['sidebar']}>
                 <SearchBarComponent onSearch={handleSearch} />
                 <div className={styles['sidebar-filters']}>
