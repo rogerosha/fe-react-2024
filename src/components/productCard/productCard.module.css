@@ -1,12 +1,17 @@
 .product-card {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   border-radius: 20px;
   border: 1px solid #CCC;
   gap: 15px;
   padding: 15px;
   max-width: 275px;
+}
+
+.cart-icon {
+  color: var(--icons);
 }
 
 .image-container {
@@ -31,6 +36,7 @@
   font-weight: 600;
   font-size: 22px;
   line-height: 25px;
+  padding: 0;
 }
 
 .price-container {
@@ -38,6 +44,7 @@
   display: flex;
   margin: 0;
   justify-content: space-between;
+  align-items: center;
 }
 
 .product-price {
@@ -53,6 +60,10 @@
   font-weight: 600;
   line-height: 17px;
   padding-left: 3px;
+}
+
+.cart-button {
+  background-color: transparent;
 }
 
 @media only screen and (min-width: 1024px) {
