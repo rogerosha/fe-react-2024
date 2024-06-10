@@ -10,23 +10,26 @@ export interface PaginationProps {
 
 const MAX_UNCOLLAPSED_PAGES_COUNT = 3;
 
+const range = (start: number, end: number): number[] => {
+    const length = end - start + 1;
+    return Array.from({ length }, (_, index) => start + index);
+};
+
 export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
-    const createPageNumbers = () => {
+    const createPageNumbers = (): (number | string)[] => {
         let pages: (number | string)[] = [];
 
         if (totalPages <= MAX_UNCOLLAPSED_PAGES_COUNT) {
-            for (let index = 1; index <= totalPages; index++) {
-                pages.push(index);
-            }
+            pages = range(1, totalPages);
         } else {
             if (currentPage <= 2) {
-                pages = [1, 2, 3, '...', totalPages];
+                pages = [...range(1, 3), '...', totalPages];
             } else if (currentPage >= totalPages - 1) {
-                pages = [1, '...', totalPages - 2, totalPages - 1, totalPages];
+                pages = [1, '...', ...range(totalPages - 2, totalPages)];
             } else if (currentPage === 3) {
-                pages = [1, 2, 3, 4, '...', totalPages];
+                pages = [...range(1, 4), '...', totalPages];
             } else if (currentPage === totalPages - 2) {
-                pages = [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+                pages = [1, '...', ...range(totalPages - 3, totalPages)];
             } else {
                 pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
             }
