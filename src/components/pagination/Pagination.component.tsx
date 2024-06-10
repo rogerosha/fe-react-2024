@@ -8,39 +8,27 @@ export interface PaginationProps {
     onPageChange: (page: number) => void;
 }
 
+const MAX_UNCOLLAPSED_PAGES_COUNT = 3;
+
 export const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, onPageChange }) => {
     const createPageNumbers = () => {
         let pages: (number | string)[] = [];
 
-        if (totalPages <= 3) {
+        if (totalPages <= MAX_UNCOLLAPSED_PAGES_COUNT) {
             for (let index = 1; index <= totalPages; index++) {
                 pages.push(index);
             }
         } else {
-            switch (currentPage) {
-                case 1: {
-                    pages = [1, 2, '...', totalPages];
-
-                    break;
-                }
-                case totalPages: {
-                    pages = [1, '...', totalPages - 1, totalPages];
-
-                    break;
-                }
-                case 2: {
-                    pages = [1, 2, 3, '...', totalPages];
-
-                    break;
-                }
-                case totalPages - 1: {
-                    pages = [1, '...', totalPages - 2, totalPages - 1, totalPages];
-
-                    break;
-                }
-                default: {
-                    pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
-                }
+            if (currentPage <= 2) {
+                pages = [1, 2, 3, '...', totalPages];
+            } else if (currentPage >= totalPages - 1) {
+                pages = [1, '...', totalPages - 2, totalPages - 1, totalPages];
+            } else if (currentPage === 3) {
+                pages = [1, 2, 3, 4, '...', totalPages];
+            } else if (currentPage === totalPages - 2) {
+                pages = [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+            } else {
+                pages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
             }
         }
 
