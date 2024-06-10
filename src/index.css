@@ -22,6 +22,8 @@
   --icons-light: #FFF;
   --icons-dark: #111;
   --icons-semi: #656565;
+  --pages-light: #F1F1F1;
+  --pages-dark: #656565;
 }
 
 body.light-mode {
@@ -33,6 +35,7 @@ body.light-mode {
   --background: var(--light-theme-background);
   --background-color: var(--background);
   --color: var(--text-primary);
+  --pages: var(--pages-light);
 }
 
 body.dark-mode {
@@ -44,6 +47,7 @@ body.dark-mode {
   --background: var(--dark-theme-background);
   --background-color: var(--background);
   --color: var(--text-primary);
+  --pages: var(--pages-dark);
 }
 
 .app-light-mode {
