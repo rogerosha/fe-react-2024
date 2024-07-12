@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import type { Product } from '@/interfaces/Product.ts';
 import type { PageRoute } from '@/interfaces/Routing.ts';
@@ -7,7 +8,7 @@ import { ProductsListComponent } from '@/pages/productsList/ProductsList.compone
 
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
-import { ThemeComponent } from './contexts/ThemeContext.tsx';
+import { ThemeComponent } from './contexts';
 import { CartContext, ThemeContext } from './contexts';
 
 import styles from './App.module.css';
@@ -82,8 +83,11 @@ function App() {
                 <CartContext.Provider value={{ selectedProducts, addProductToCart, removeProductFromCart }}>
                     <div className={`${styles.app} ${theme === 'dark' ? 'app-dark-mode' : 'app-light-mode'}`}>
                         <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
-                        {page === 'about' && <AboutComponent />}
-                        {page === 'products' && <ProductsListComponent products={products} />}
+                        <Routes>
+                            <Route path="/" element={<Navigate to="/products" />} />
+                            <Route path="/about" element={<AboutComponent />} />
+                            <Route path="/products" element={<ProductsListComponent products={products} />} />
+                        </Routes>
                         <FooterComponent />
                     </div>
                 </CartContext.Provider>
