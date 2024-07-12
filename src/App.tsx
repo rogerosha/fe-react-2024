@@ -81,13 +81,7 @@ function App() {
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
                 <CartContext.Provider value={{ selectedProducts, addProductToCart, removeProductFromCart }}>
                     <div className={`${styles.app} ${theme === 'dark' ? 'app-dark-mode' : 'app-light-mode'}`}>
-                        <HeaderComponent
-                            selectedProducts={selectedProducts}
-                            page={page}
-                            onPageClick={onPageClick}
-                            isDarkMode={theme === 'dark'}
-                            toggleTheme={toggleTheme}
-                        />
+                        <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
                         {page === 'about' && <AboutComponent />}
                         {page === 'products' && <ProductsListComponent products={products} />}
                         <FooterComponent />
