@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import type { Product } from '@/interfaces/Product.ts';
 import type { PageRoute } from '@/interfaces/Routing.ts';
@@ -8,21 +8,11 @@ import { ProductsListComponent } from '@/pages/productsList/ProductsList.compone
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
 import { ThemeComponent } from './components/theme/Theme.component.tsx';
+import { CartContext, ThemeContext } from './contexts';
 
 import styles from './App.module.css';
 
 const THEME_KEY = 'theme';
-
-const CartContext = createContext({
-    selectedProducts: [] as number[],
-    addProductToCart: (productId: number) => {},
-    removeProductFromCart: (productId: number) => {},
-});
-
-const ThemeContext = createContext({
-    theme: 'light' as 'light' | 'dark',
-    toggleTheme: () => {},
-});
 
 function App() {
     const [products, setProducts] = useState<Product[]>([]);
