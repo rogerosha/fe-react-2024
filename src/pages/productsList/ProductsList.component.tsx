@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useCart, useTheme } from '@/App.tsx';
 import { Pagination } from '@/components/pagination/Pagination.component.tsx';
@@ -22,10 +22,32 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [sortOption, setSortOption] = useState<string | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        let updatedProducts = products;
+
+        if (searchQuery) {
+            updatedProducts = updatedProducts.filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+
+        if (selectedCategories.length > 0) {
+            updatedProducts = updatedProducts.filter((product) => selectedCategories.includes(product.category.name.toLowerCase()));
+        }
+
+        updatedProducts = updatedProducts.sort((a, b) => {
+            if (sortOption === SortFilters.highLow) return b.price - a.price;
+            if (sortOption === SortFilters.newest) return new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime();
+            if (sortOption === SortFilters.oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
+            return 0;
+        });
+
+        setFilteredProducts(updatedProducts);
+        setCurrentPage(1);
+    }, [searchQuery, selectedCategories, sortOption, products]);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
-        setCurrentPage(1);
     };
 
     const handleCategoryClick = (category: string) => {
@@ -35,12 +57,10 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
             }
             return [...previousCategories, category];
         });
-        setCurrentPage(1);
     };
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSortOption(event.target.value);
-        setCurrentPage(1);
     };
 
     const handleCartClick = (productId: number) => {
@@ -54,19 +74,6 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
     };
-
-    const filteredProducts = products
-        .filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
-        .filter((product) => {
-            if (selectedCategories.length === 0) return true;
-            return selectedCategories.includes(product.category.name.toLowerCase());
-        })
-        .sort((a, b) => {
-            if (sortOption === SortFilters.highLow) return b.price - a.price;
-            if (sortOption === SortFilters.newest) return new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime();
-            if (sortOption === SortFilters.oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
-            return 0;
-        });
 
     const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_ON_PAGE);
     const startIndex = (currentPage - 1) * PRODUCTS_ON_PAGE;
