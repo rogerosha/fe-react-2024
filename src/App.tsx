@@ -7,7 +7,7 @@ import { ProductsListComponent } from '@/pages/productsList/ProductsList.compone
 
 import { FooterComponent } from './components/footer/Footer.component.tsx';
 import { HeaderComponent } from './components/header/Header.component.tsx';
-import { ThemeComponent } from './components/theme/Theme.component.tsx';
+import { ThemeComponent } from './contexts/ThemeContext.tsx';
 import { CartContext, ThemeContext } from './contexts';
 
 import styles from './App.module.css';

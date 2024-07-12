@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import React, { useContext } from 'react';
 
-import { ThemeContext } from '@/contexts/ThemeContext.ts';
+import { ThemeContext } from '@/contexts/ThemeContext.tsx';
 import type { PageRoute } from '@/interfaces/Routing.ts';
 
 import CartIcon from '../../assets/cart.svg?react';

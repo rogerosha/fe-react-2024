@@ -1,2 +1,2 @@
-export * from './CartContext.ts';
-export * from './ThemeContext.ts';
+export * from './CartContext.tsx';
+export * from './ThemeContext.tsx';
