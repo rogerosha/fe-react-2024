@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { ThemeContext } from '@/contexts/ThemeContext.tsx';
 import type { PageRoute } from '@/interfaces/Routing.ts';
@@ -21,6 +21,7 @@ export interface HeaderProps {
 export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedProducts }) => {
     const { theme, toggleTheme } = useContext(ThemeContext);
     const isDarkMode = theme === 'dark';
+    const location = useLocation();
 
     return (
         <header className={styles['header']}>
@@ -34,14 +35,14 @@ export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedPr
                             <SunIcon
                                 className={styles['day-mode']}
                                 style={{ color: isDarkMode ? 'var(--icons-semi)' : 'var(--icons-light)' }}
-                            ></SunIcon>
+                            />
                         </button>
                         <div className={styles['divider']}></div>
                         <button onClick={toggleTheme} className={styles['day-night']}>
                             <MoonIcon
                                 className={styles['night-mode']}
                                 style={{ color: isDarkMode ? 'var(--icons-light)' : 'var(--icons-semi)' }}
-                            ></MoonIcon>
+                            />
                         </button>
                     </div>
                 </div>
@@ -50,14 +51,14 @@ export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedPr
                         <Link
                             to="/about"
                             className={styles['navigation-link']}
-                            style={{ fontWeight: page === 'about' ? 'bold' : 'initial' }}
+                            style={{ fontWeight: location.pathname === '/about' ? 'bold' : 'initial' }}
                         >
                             About
                         </Link>
                         <Link
                             to="/products"
                             className={styles['navigation-link']}
-                            style={{ fontWeight: page === 'products' ? 'bold' : 'initial' }}
+                            style={{ fontWeight: location.pathname === '/products' ? 'bold' : 'initial' }}
                         >
                             Products
                         </Link>
