@@ -1,34 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const ProductPage: React.FC = () => {
+import type { Product } from '@/interfaces/Product';
+
+import styles from './ProductPage.module.css';
+
+interface ProductPageProps {
+    getProduct: (id: number) => Promise<Product | null>;
+}
+
+const ProductPage: React.FC<ProductPageProps> = ({ getProduct }) => {
     const { id } = useParams<{ id: string }>();
-    const [product, setProduct] = useState<any>(null);
+    const [product, setProduct] = useState<Product | null>(null);
+    const [isLoading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
         const fetchProduct = async () => {
-            try {
-                const response = await fetch(`https://ma-backend-api.mocintra.com/api/v1/products/${id}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch product');
-                }
-                const data = await response.json();
-                setProduct(data.product);
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
+            const productId = Number(id);
+            const fetchedProduct = await getProduct(productId);
+            setProduct(fetchedProduct);
+            setLoading(false);
         };
 
         fetchProduct();
-    }, [id]);
+    }, [id, getProduct]);
 
-    if (!product) return <div>Loading...</div>;
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!product) {
+        return <div>Product not found</div>;
+    }
 
     return (
-        <div>
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-            <p>${product.price}</p>
+        <div className={styles['product-page']}>
+            <div className={styles['product-image-container']}>
+                <img src={product.images[0]} alt={product.title} className={styles['product-image']} />
+            </div>
+            <div className={styles['product-details']}>
+                <h1 className={styles['product-title']}>{product.title}</h1>
+                <p className={styles['product-description']}>{product.description}</p>
+                <div className={styles['product-price']}>₴{product.price}</div>
+                <button className={styles['add-to-cart-button']}>Add to Cart</button>
+            </div>
         </div>
     );
 };

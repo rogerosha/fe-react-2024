@@ -79,6 +79,19 @@ function App() {
         });
     };
 
+    const getProduct = async (id: number): Promise<Product | null> => {
+        try {
+            const response = await fetch(`https://ma-backend-api.mocintra.com/api/v1/products/${id}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch product');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching product:', error);
+            return null;
+        }
+    };
+
     return (
         <ThemeComponent>
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -89,10 +102,10 @@ function App() {
                                 path="/"
                                 element={<LayoutComponent page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
                             >
-                                <Route index element={<Navigate to="/about" />} />
+                                <Route index element={<Navigate to="/products" />} />
                                 <Route path="/about" element={<AboutComponent />} />
                                 <Route path="/products" element={<ProductsListComponent products={products} />} />
-                                <Route path="/products/:id" element={<ProductPage />} />
+                                <Route path="/products/:id" element={<ProductPage getProduct={getProduct} />} />
                                 <Route
                                     path="*"
                                     element={<NotFoundPage page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
