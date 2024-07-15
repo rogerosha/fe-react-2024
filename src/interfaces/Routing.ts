@@ -1,1 +1,1 @@
-export type PageRoute = 'about' | 'products';
+export type PageRoute = 'about' | 'products' | 'product';

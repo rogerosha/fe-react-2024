@@ -6,8 +6,10 @@ import type { PageRoute } from '@/interfaces/Routing.ts';
 import { AboutComponent } from '@/pages/about/About.component.tsx';
 import { ProductsListComponent } from '@/pages/productsList/ProductsList.component.tsx';
 
-import { FooterComponent } from './components/footer/Footer.component.tsx';
-import { HeaderComponent } from './components/header/Header.component.tsx';
+import LayoutComponent from '../src/components/layout/Layout.component.tsx';
+import NotFoundPage from '../src/pages/notFound/notFoundPage.tsx';
+import ProductPage from '../src/pages/productsList/ProductPage.tsx';
+
 import { ThemeComponent } from './contexts';
 import { CartContext, ThemeContext } from './contexts';
 
@@ -82,13 +84,21 @@ function App() {
             <ThemeContext.Provider value={{ theme, toggleTheme }}>
                 <CartContext.Provider value={{ selectedProducts, addProductToCart, removeProductFromCart }}>
                     <div className={`${styles.app} ${theme === 'dark' ? 'app-dark-mode' : 'app-light-mode'}`}>
-                        <HeaderComponent selectedProducts={selectedProducts} page={page} onPageClick={onPageClick} />
                         <Routes>
-                            <Route path="/" element={<Navigate to="/products" />} />
-                            <Route path="/about" element={<AboutComponent />} />
-                            <Route path="/products" element={<ProductsListComponent products={products} />} />
+                            <Route
+                                path="/"
+                                element={<LayoutComponent page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
+                            >
+                                <Route index element={<Navigate to="/products" />} />
+                                <Route path="/about" element={<AboutComponent />} />
+                                <Route path="/products" element={<ProductsListComponent products={products} />} />
+                                <Route path="/products/:id" element={<ProductPage />} />
+                                <Route
+                                    path="*"
+                                    element={<NotFoundPage page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
+                                />
+                            </Route>
                         </Routes>
-                        <FooterComponent />
                     </div>
                 </CartContext.Provider>
             </ThemeContext.Provider>

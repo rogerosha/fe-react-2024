@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { ThemeContext } from '@/contexts/ThemeContext.tsx';
 import type { PageRoute } from '@/interfaces/Routing.ts';
@@ -46,20 +47,20 @@ export const HeaderComponent: FC<HeaderProps> = ({ page, onPageClick, selectedPr
                 </div>
                 <div className={styles['right-part']}>
                     <div className={styles['navigation']}>
-                        <span
+                        <Link
+                            to="/about"
                             className={styles['navigation-link']}
                             style={{ fontWeight: page === 'about' ? 'bold' : 'initial' }}
-                            onClick={() => onPageClick('about')}
                         >
                             About
-                        </span>
-                        <span
+                        </Link>
+                        <Link
+                            to="/products"
                             className={styles['navigation-link']}
                             style={{ fontWeight: page === 'products' ? 'bold' : 'initial' }}
-                            onClick={() => onPageClick('products')}
                         >
                             Products
-                        </span>
+                        </Link>
                     </div>
                     <div className={styles['right-menu']}>
                         <CartIcon className={styles['cart']} />
