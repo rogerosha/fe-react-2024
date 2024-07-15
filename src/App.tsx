@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
-import type { Product } from '@/interfaces/Product.ts';
-import type { PageRoute } from '@/interfaces/Routing.ts';
-import { AboutComponent } from '@/pages/about/About.component.tsx';
-import { ProductsListComponent } from '@/pages/productsList/ProductsList.component.tsx';
-
-import LayoutComponent from '../src/components/layout/Layout.component.tsx';
-import NotFoundPage from '../src/pages/notFound/notFoundPage.tsx';
-import ProductPage from '../src/pages/productsList/ProductPage.tsx';
+import LayoutComponent from '@/components/layout/Layout.component';
+import type { Product } from '@/interfaces/Product';
+import type { PageRoute } from '@/interfaces/Routing';
+import { AboutComponent } from '@/pages/about/About.component';
+import NotFoundPage from '@/pages/notFound/notFoundPage';
+import ProductPage from '@/pages/productsList/ProductPage';
+import { ProductsListComponent } from '@/pages/productsList/ProductsList.component';
 
 import { ThemeComponent } from './contexts';
 import { CartContext, ThemeContext } from './contexts';
@@ -102,10 +101,13 @@ function App() {
                                 path="/"
                                 element={<LayoutComponent page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
                             >
-                                <Route index element={<Navigate to="/products" />} />
+                                <Route index element={<Navigate to="/about" />} />
                                 <Route path="/about" element={<AboutComponent />} />
                                 <Route path="/products" element={<ProductsListComponent products={products} />} />
-                                <Route path="/products/:id" element={<ProductPage getProduct={getProduct} />} />
+                                <Route
+                                    path="/products/:id"
+                                    element={<ProductPage getProduct={getProduct} onAddToCart={addProductToCart} />}
+                                />
                                 <Route
                                     path="*"
                                     element={<NotFoundPage page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
