@@ -89,7 +89,7 @@ function App() {
                                 path="/"
                                 element={<LayoutComponent page={page} onPageClick={onPageClick} selectedProducts={selectedProducts} />}
                             >
-                                <Route index element={<Navigate to="/products" />} />
+                                <Route index element={<Navigate to="/about" />} />
                                 <Route path="/about" element={<AboutComponent />} />
                                 <Route path="/products" element={<ProductsListComponent products={products} />} />
                                 <Route path="/products/:id" element={<ProductPage />} />
