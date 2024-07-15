@@ -29,7 +29,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onCartClick, 
             <div className={styles['price-container']}>
                 <p className={styles['product-price']}>
                     {product.price}
-                    <span className={styles['currency-sign']}>₴</span>
+                    <span className={styles['hryvnia-sign']}>₴</span>
                 </p>
                 <button
                     onClick={(event) => {
