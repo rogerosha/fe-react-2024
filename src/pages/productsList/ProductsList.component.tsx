@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
+import { useCart, useTheme } from '@/App.tsx';
+import { Pagination } from '@/components/pagination/Pagination.component.tsx';
 import { ProductCard } from '@/components/productCard/ProductCard.component.tsx';
 import SearchBarComponent from '@/components/searchBar/SearchBar.component.tsx';
 import { Categories, SortFilters } from '@/constants/sortFilters.ts';
@@ -7,23 +9,54 @@ import type { Product } from '@/interfaces/Product.ts';
 
 import styles from './productsList.module.css';
 
+const PRODUCTS_ON_PAGE = 8;
+
 export interface ProductsListComponentProps {
     products: Product[];
-    selectedProducts: number[];
-    setSelectedProducts: (products: number[]) => void;
 }
 
-export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ products, selectedProducts, setSelectedProducts }) => {
+export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ products }) => {
+    const { selectedProducts, addProductToCart, removeProductFromCart } = useCart();
+    const { theme } = useTheme();
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
     const [sortOption, setSortOption] = useState<string | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        let updatedProducts = products;
+
+        if (searchQuery) {
+            updatedProducts = updatedProducts.filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
+        }
+
+        if (selectedCategories.length > 0) {
+            updatedProducts = updatedProducts.filter((product) => selectedCategories.includes(product.category.name.toLowerCase()));
+        }
+
+        updatedProducts = updatedProducts.sort((a, b) => {
+            if (sortOption === SortFilters.highLow) return b.price - a.price;
+            if (sortOption === SortFilters.newest) return new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime();
+            if (sortOption === SortFilters.oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
+            return 0;
+        });
+
+        setFilteredProducts(updatedProducts);
+        setCurrentPage(1);
+    }, [searchQuery, selectedCategories, sortOption, products]);
 
     const handleSearch = (query: string) => {
         setSearchQuery(query);
     };
 
     const handleCategoryClick = (category: string) => {
-        setSelectedCategory((previousCategory) => (previousCategory === category ? null : category));
+        setSelectedCategories((previousCategories) => {
+            if (previousCategories.includes(category)) {
+                return previousCategories.filter((cat) => cat !== category);
+            }
+            return [...previousCategories, category];
+        });
     };
 
     const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,27 +65,22 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
 
     const handleCartClick = (productId: number) => {
         if (selectedProducts.includes(productId)) {
-            setSelectedProducts(selectedProducts.filter((id) => id !== productId));
+            removeProductFromCart(productId);
         } else {
-            setSelectedProducts([...selectedProducts, productId]);
+            addProductToCart(productId);
         }
     };
 
-    const filteredProducts = products
-        .filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()))
-        .filter((product) => {
-            if (!selectedCategory) return true;
-            return product.category.name.toLowerCase() === selectedCategory.toLowerCase();
-        })
-        .sort((a, b) => {
-            if (sortOption === SortFilters.highLow) return b.price - a.price;
-            if (sortOption === SortFilters.newest) return new Date(b.creationAt).getTime() - new Date(a.creationAt).getTime();
-            if (sortOption === SortFilters.oldest) return new Date(a.creationAt).getTime() - new Date(b.creationAt).getTime();
-            return 0;
-        });
+    const handlePageChange = (page: number) => {
+        setCurrentPage(page);
+    };
+
+    const totalPages = Math.ceil(filteredProducts.length / PRODUCTS_ON_PAGE);
+    const startIndex = (currentPage - 1) * PRODUCTS_ON_PAGE;
+    const paginatedProducts = filteredProducts.slice(startIndex, startIndex + PRODUCTS_ON_PAGE);
 
     return (
-        <div className={styles['products-container']}>
+        <div className={`${styles['products-container']} ${theme === 'dark' ? styles['dark-mode'] : styles['light-mode']}`}>
             <div className={styles['sidebar']}>
                 <SearchBarComponent onSearch={handleSearch} />
                 <div className={styles['sidebar-filters']}>
@@ -61,7 +89,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                             <button
                                 key={category.id}
                                 onClick={() => handleCategoryClick(category.id)}
-                                className={`${styles['filter-button']} ${selectedCategory === category.id ? styles['active'] : ''}`}
+                                className={`${styles['filter-button']} ${selectedCategories.includes(category.id) ? styles['active'] : ''}`}
                             >
                                 {category.label}
                             </button>
@@ -79,7 +107,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
             </div>
             <div className={styles['products-content']}>
                 <div className={styles['products-list']}>
-                    {filteredProducts.map((product) => (
+                    {paginatedProducts.map((product) => (
                         <ProductCard
                             onCartClick={() => handleCartClick(product.id)}
                             isProductInCart={selectedProducts.includes(product.id)}
@@ -88,6 +116,7 @@ export const ProductsListComponent: React.FC<ProductsListComponentProps> = ({ pr
                         />
                     ))}
                 </div>
+                <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             </div>
         </div>
     );
