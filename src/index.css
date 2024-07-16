@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Montserrat, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -9,6 +9,60 @@
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --light-theme-background: #FFF;
+  --dark-theme-background: #111;
+  --text-primary-light: #111;
+  --text-primary-dark: #FFF;
+  --text-secondary-light: #656565;
+  --text-secondary-dark: #FFF;
+  --border-button-light: #E1E1E1;
+  --border-button-dark: #656565;
+  --border-card-light: #CCC;
+  --border-card-dark: #333;
+  --icons-light: #FFF;
+  --icons-dark: #111;
+  --icons-semi: #656565;
+  --pages-light: #F1F1F1;
+  --pages-dark: #656565;
+}
+
+body.light-mode {
+  --text-primary: var(--text-primary-light);
+  --text-secondary: var(--text-secondary-light);
+  --border-button: var(--border-button-light);
+  --border-card: var(--border-card-light);
+  --icons: var(--icons-dark);
+  --background: var(--light-theme-background);
+  --background-color: var(--background);
+  --color: var(--text-primary);
+  --pages: var(--pages-light);
+}
+
+body.dark-mode {
+  --text-primary: var(--text-primary-dark);
+  --text-secondary: var(--text-secondary-dark);
+  --border-button: var(--border-button-dark);
+  --border-card: var(--border-card-dark);
+  --icons: var(--icons-light);
+  --background: var(--dark-theme-background);
+  --background-color: var(--background);
+  --color: var(--text-primary);
+  --pages: var(--pages-dark);
+}
+
+.app-light-mode {
+  background-color: var(--light-theme-background);
+  color: var(--text-primary);
+}
+
+.app-dark-mode {
+  background-color: var(--dark-theme-background);
+  color: var(--text-primary);
+}
+
+* {
+  font-family: Montserrat, sans-serif;
+  box-sizing: border-box;
 }
 
 a {

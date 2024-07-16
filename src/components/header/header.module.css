@@ -1,4 +1,189 @@
 .header {
-  font-size: 34px;
-  text-align: center;
+  background-color: #111;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
+.header-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1280px;
+  padding-left: 52px;
+}
+
+.theme-changer {
+  display: flex;
+}
+
+.left-part {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 50px;
+}
+
+.right-part {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.MA-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: auto;
+}
+
+.day-night {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0;
+}
+
+.day-mode, .night-mode {
+  width: 34px;
+  height: 34px;
+}
+
+.divider {
+  width: 1px;
+  height: 34px;
+  background-color: #656565;
+  margin-inline: 14px;
+}
+
+.cart {
+  width: 24px;
+  height: 24px;
+}
+
+.menu {
+  width: 30px;
+  height: 30px;
+}
+
+.right-menu {
+  display: flex;
+  gap: 14px;
+  margin-left: auto;
+  align-items: center;
+  color: var(--text-primary-dark);
+}
+
+@media only screen and (min-width: 1024px) {
+
+  .header {
+    height: 80px;
+  }
+
+  .MA-logo {
+    width: 46px;
+    height: 46px;
+  }
+
+  .menu {
+    display: none;
+  }
+
+  .navigation {
+    display: flex;
+    gap: 49px;
+    margin-right: 107px;
+  }
+
+  .navigation-link {
+    color: #FFF;
+    text-decoration: none;
+  }
+
+  .buttons {
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-right: 52px;
+    gap: 10px;
+  }
+
+  .logout {
+    width: 24px;
+    height: 24px;
+  }
+
+  .button-logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+    width: 113px;
+    height: 34px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    color: #FFF;
+  }
+
+  .signup {
+    width: 24px;
+    height: 24px;
+    color: var(--icons-semi);
+  }
+
+  .button-signup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    height: 34px;
+    border: 1px solid #656565;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    white-space: nowrap;
+    color: #656565;
+    padding: 5px 10px;
+    gap: 6px;
+  }
+
+  .buttons img {
+    margin-right: 6px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+
+  .buttons {
+    display: none;
+  }
+
+  .theme-changer {
+    display: none;
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .day-night {
+    display: none;
+  }
+
+  .header-wrapper {
+    padding: 0 30px;
+  }
 }
